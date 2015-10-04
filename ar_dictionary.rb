@@ -1,7 +1,22 @@
-require 'net/https'
+require 'sqlite3'
+require 'active_record'
 require 'sinatra'
+require 'sinatra/reloader' if development?
 require 'json'
 require 'erb'
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+ActiveRecord::Base.establish_connection(
+  adapter: 'sqlite3',
+  database: File.dirname(__FILE__) + "/dictionary.sqlite3"
+)
+
+class Definition < ActiveRecord::Base
+  has_many :words
+  validates :word, presence: true
+  validates :definition, presence: true
+end
 
 get '/' do
   @dictionary = JSON.parse(File.read("dictionary.json"))
