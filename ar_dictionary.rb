@@ -23,7 +23,7 @@ get '/' do
 end
 
 get '/search' do
-  @definition = Definition.find_by(word: params[:search_word])
+  @definition = Definition.find_by(word: params[:q])
   erb :search
 end
 
