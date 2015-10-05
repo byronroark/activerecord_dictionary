@@ -15,7 +15,7 @@ ActiveRecord::Base.establish_connection(
 class Definition < ActiveRecord::Base
   has_many :words
   validates :word, presence: true
-  validates :definition, presence: true
+  validates :meaning, presence: true
 end
 
 get '/' do
@@ -31,8 +31,8 @@ end
 
 post '/save' do
   word = params['word']
-  definition = params['definition']
-  hash = { word: word, definition: definition }
+  meaning = params['meaning']
+  hash = { word: word, meaning: meaning }
 
   array_of_hashes = JSON.parse(File.read("dictionary.json"))
   array_of_hashes << hash
