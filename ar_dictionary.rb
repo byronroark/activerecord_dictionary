@@ -27,6 +27,10 @@ get '/search' do
   erb :search
 end
 
+get '/error' do
+  erb :error
+end
+
 post '/save' do
   new_word = Definition.create(word: params["word"], meaning: params["meaning"]).valid?
   if new_word == true
